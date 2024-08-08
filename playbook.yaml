@@ -1,10 +1,5 @@
 - hosts: all
   become: true
-  tasks:
-
-    - name: test connectivity
-      ping:
-
-    - name: Update server
-      apt:
-        update_cache: true
+  roles:
+    - docker_setup
+    
