@@ -1,0 +1,13 @@
+- name: Run MongoDB Container
+  docker_container:
+    name: mongo-container_name
+    image: mongo:4.4.20
+    ports:
+      - '27017:27017'
+    volumes:
+      - bluewaters:/data/db
+    networks:
+      - name: trust.net
+  tags:
+    - v2.0.2
+    - v1.0.1
