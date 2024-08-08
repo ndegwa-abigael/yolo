@@ -1,0 +1,16 @@
+
+- name: Pull website image from repository
+  docker_image:
+    name: abbien/shark-frontend:v2.0.1
+    source: pull
+
+- name: Launch website Container
+  docker_container:
+    name: abbien/shark-frontend:v2.0.1
+    image: abbien/shark-frontend:v2.0.1
+    networks:
+      - name: trust.net
+    ports:
+      - "3000:3000"
+    command: "npm start"
+  become: true
