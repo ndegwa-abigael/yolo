@@ -161,6 +161,8 @@ Make sure that you have the following installed:
 ## Screenshot and Documentation
 1. Take a screenshot of the deployed image on DockerHub.
 2. Include the screenshot in your explanation.md.
+3. ![image](https://github.com/user-attachments/assets/dc25654e-ff7d-41eb-a273-ffbb3276dc46)
+
 
 ## Unit Testing
 Go ahead and add a product (note that the price field only takes a numeric input)
