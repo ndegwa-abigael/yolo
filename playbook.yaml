@@ -4,3 +4,7 @@
 
     - name: test connectivity
       ping:
+
+    - name: Update server
+      apt:
+        update_cache: true
