@@ -9,11 +9,11 @@ The Yolo project is a full-stack e-commerce application built using Node.js, Exp
 -   **User Management**: Registration, login, and profile management.
 -   **Product Management**: CRUD operations for products.
 		- CRUD operations refer to the basic functions required to manage data in most applications. Here's what each part stands for:
-	-   **Create**: Adding new products to the database.
-	-   **Read**: Retrieving product information from the database (e.g., listing all products or viewing details of a specific product).
-	-   **Update**: Modifying existing product information (e.g., changing price, name, or description).
-	-   **Delete**: Removing a product from the database.
-	These operations allow users to manage the product lifecycle in the application.
+            -   **Create**: Adding new products to the database.
+            -   **Read**: Retrieving product information from the database (e.g., listing all products or viewing details of a specific product).
+            -   **Update**: Modifying existing product information (e.g., changing price, name, or description).
+            -   **Delete**: Removing a product from the database.
+        These operations allow users to manage the product lifecycle in the application.
 -   **Order Management**: Shopping cart, order creation, and payment processing.
 -   **Authentication**: Secure user authentication using JWT.
 - Secure user authentication using JWT (JSON Web Tokens) is a method to verify the identity of users. Here's how it works:
