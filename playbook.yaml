@@ -1,5 +1,6 @@
 - hosts: all
   become: true
   roles:
-    - docker_setup
-    
+    - Launch_website
+    - Backend
+    - setup_mongodb

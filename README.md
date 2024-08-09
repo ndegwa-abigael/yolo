@@ -1,3 +1,5 @@
+
+
 cd # Requirements
 Make sure that you have the following installed:
 - [node](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04) 
@@ -29,8 +31,11 @@ Welcome to the Yolomy E-commerce website where you get all your client needs sat
 - [Prerequisites](#prerequisites)
 - [Requirements](#Requirements)
 - [Getting Started](#getting-started)
-- [Create Dockerfiles](#Dockerfiles-client dockerfiles-backend)
-- [Create DockerComposeFile](#Docker Compose File)
+- [Create Docker Files](#Dockerfiles)
+	--client Dockerfile
+	--backend Dockerfile
+- [Create Docker Compose File](#Docker-compose-file)
+- [Vagrant File](#Vagrantfile)
 - [Unit Testing](#unit-testing)
 - [Continuous Integration (CI)](#continuous-integration-ci)
 - [Communication with Slack](#communication-with-slack)
@@ -165,7 +170,7 @@ Make sure that you have the following installed:
 
 
 ## Unit Testing
-Go ahead and add a product (note that the price field only takes a numeric input)
+Go ahead and add a product (note that the price field only takes a numeric input) 
 
 ## Communication with Slack
 To receive notifications on Slack, follow these steps:
@@ -178,7 +183,174 @@ To receive notifications on Slack, follow these steps:
    - Value: [Your Slack Webhook URL]
 
 Now, when the CI workflow runs, it will send notifications to the configured Slack channel.
+### Stage 1: Ansible Instrumentation
 
+1.  **Set Up the Environment**
+    
+    -   Provision a Vagrant virtual machine with the latest Ubuntu server (use Jeff Geerling's Ubuntu 20.04).
+        
+        bash
+        
+        Copy code
+        
+        `vagrant init geerlingguy/ubuntu2004
+        vagrant up
+        vagrant ssh` 
+        
+2.  **Set Up the Ansible Playbook**
+    
+    -   In the root directory of your project, create the playbook `main.yml`.
+    -   Define tasks using variables, roles, blocks, and tags.
+    -   Example structure:
+        
+        css
+        
+        Copy code
+        
+        `.
+        ├── Vagrantfile
+        ├── main.yml
+        ├── roles/
+        │   ├── frontend/
+        │   ├── backend/
+        │   └── database/
+        └── vars/
+            └── main.yml` 
+        
+3.  **Define Variables and Roles**
+    
+    -   Create `vars/main.yml` for variable definitions.
+    -   Create roles for frontend, backend, and database in the `roles` directory.
+    -   Example `main.yml` content:
+        
+        yaml
+        
+        Copy code
+        
+        `- name: Set up the environment
+          hosts: all
+          become: true
+          vars_files:
+            - vars/main.yml
+        
+          roles:
+            - frontend
+            - backend
+            - database` 
+        
+4.  **Implement Tasks in Roles**
+    
+    -   Each role should have its tasks defined in `tasks/main.yml`.
+    -   Example frontend role (`roles/frontend/tasks/main.yml`):
+        
+        yaml
+        
+        Copy code
+        
+        `- name: Install Nginx
+          apt:
+            name: nginx
+            state: present
+        
+        - name: Start Nginx
+          service:
+            name: nginx
+            state: started
+            enabled: true` 
+        
+5.  **Clone the Code and Configure Docker Containers**
+    
+    -   In `main.yml`, add tasks to clone the GitHub repository and run Docker containers.
+    -   Example task to clone the repository:
+        
+        yaml
+        
+        Copy code
+        
+        `- name: Clone repository
+          git:
+            repo: 'https://github.com/yourusername/yourrepository.git'
+            dest: /path/to/your/app` 
+        
+6.  **Run the Playbook and Verify**
+    
+    -   Run the playbook to set up the environment and containers.
+        
+        bash
+        
+        Copy code
+        
+        `ansible-playbook main.yml -i inventory` 
+        
+    -   Verify the application by accessing it in the browser and testing the "Add Product" functionality.
+
+### Stage 2: Ansible and Terraform Instrumentation
+(The use of Terraform here is optional)
+1.  **Set Up the Branch and Directory**
+    
+    -   Checkout to a new branch `Stage_two`.
+        
+        bash
+        
+        Copy code
+        
+        `git checkout -b Stage_two` 
+        
+    -   Create a new directory in the root folder named `Stage_two`.
+        
+        bash
+        
+        Copy code
+        
+        `mkdir Stage_two` 
+        
+2.  **Set Up Terraform Scripts**
+    
+    -   In `Stage_two`, create a `terraform` directory.
+    -   Define Terraform scripts to provision the necessary resources.
+    -   Example structure:
+        
+        css
+        
+        Copy code
+        
+        `.
+        ├── main.yml
+        ├── terraform/
+        │   ├── main.tf
+        │   ├── variables.tf
+        │   └── outputs.tf` 
+        
+3.  **Integrate Ansible with Terraform**
+    
+    -   Use Ansible to invoke Terraform.
+    -   Example task in `main.yml` to invoke Terraform:
+        
+        yaml
+        
+        Copy code
+        
+        `- name: Apply Terraform
+          command: terraform apply -auto-approve
+          args:
+            chdir: terraform/` 
+        
+4.  **Configure Ansible Roles**
+    
+    -   Similar to Stage 1, define roles for configuring the server and deploying the application.
+    -   Ensure roles are well-documented and follow good practices.
+5.  **Run Terraform and Ansible**
+    
+    -   Run Terraform to provision resources and Ansible to configure the server.
+        
+        bash
+        
+        Copy code
+        
+        `terraform init
+        terraform apply -auto-approve
+        ansible-playbook main.yml -i inventory` 
+        
 
 
 ## Contributing
@@ -187,3 +359,4 @@ We encourage contributions! If you have suggestions, enhancements, or bug fixes,
 
 ## License
 This project is licensed under the [MIT License](./LICENSE).
+> Written with [StackEdit](https://stackedit.io/).
