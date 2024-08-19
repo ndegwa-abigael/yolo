@@ -12,7 +12,7 @@ services:
     depends_on:
       - backend
     networks:
-      - shoppers
+      - trust.net
 
   #Build the backend container for my website
   backend: 
@@ -24,9 +24,9 @@ services:
     ports:
       - 5000:5000
     environment:
-      - DB_URL=mongodb://mongo/yolomy
+      - mongodb://MONGO:27017/mydatabase
     networks:
-      - shoppers
+      - trust.net
     
   #The database that will be assosiated with the website
   mongo:
@@ -36,15 +36,15 @@ services:
     ports:
       - 27017:27017 
     volumes:
-      - yolomy:/data/db
+      -bluewaters:/data/db
     networks:
-      - shoppers
+      - trust.net
 
 #Declare the volume that the database will be using to persiste the data
 volumes:
-  yolomy: 
+  bluewaters:/data/db: 
     driver: local
 #create bridge network for the container to communicate
 networks:
-  shoppers:
+  trust.net:
     driver: bridge
