@@ -1,45 +1,50 @@
-version: "3.8"
-
 services:
-  frontend:
+  #Build the client container for the website
+  client: 
+    container_name: client
+    image: abbien/shark-frontend:v2.0.1
     build:
       context: ./client
-    container_name: abbien/shark-frontend:v2.0.1 
+      dockerfile: client.dockerfile
     ports:
-      - "3000:3000"
+      - 3000:3000
+    restart: always
     depends_on:
       - backend
     networks:
-      - trust.net
+      - shoppers
 
-  backend:
+  #Build the backend container for my website
+  backend: 
+    container_name: backend
+    image: abbien/shark-backend :v1.0.1
     build:
       context: ./backend
-    container_name: abbien/shark-backend :v1.0.1
-    environment:
-      MONGO_URL: mongodb://MONGO:27017/mydatabase
+      dockerfile: backend.dockerfile
     ports:
-      - "5000:5000"  
-    depends_on:
-      - mongo
+      - 5000:5000
+    environment:
+      - DB_URL=mongodb://mongo/yolomy
     networks:
-      - trust.net
-
+      - shoppers
+    
+  #The database that will be assosiated with the website
   mongo:
+    container_name: db
     image: mongo:4.4.20
-    container_name: mongo-container_name
-    environment:
-      MONGO_INITDB_DATABASE: mydatabase
+    restart: always
     ports:
-      - "27017:27017"
+      - 27017:27017 
     volumes:
-      - bluewaters:/data/db
+      - yolomy:/data/db
     networks:
-      - trust.net
+      - shoppers
 
+#Declare the volume that the database will be using to persiste the data
 volumes:
-  bluewaters:
-
+  yolomy: 
+    driver: local
+#create bridge network for the container to communicate
 networks:
-  trust.net:
-    driver:  bridge
+  shoppers:
+    driver: bridge
