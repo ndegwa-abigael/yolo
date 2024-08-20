@@ -24,3 +24,39 @@ spec:
         # env:
         #   - name: MONGO_INITDB_DATABASE
         #   - value: mongo
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo
+spec:
+  resources:
+    requests:
+      storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+
+  hostPath:
+   path: /tmp
+
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mongo
+# spec:
+#   capacity:
+#     storage: 100Mi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Recycle
+#   storageClassName: slow
+#   mountOptions:
+#     - hard
+#     - nfsvers=4.1
+#   nfs:
+#     path: /tmp
+#     server: 172.17.0.2
