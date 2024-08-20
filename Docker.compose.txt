@@ -4,7 +4,7 @@ services:
   frontend:
     build:
       context: ./client
-    container_name: abbien/shark-frontend:v2.0.1 
+    container_name: abbien/shark-frontend:v2.0.2 
     ports:
       - "3000:3000"
     depends_on:
