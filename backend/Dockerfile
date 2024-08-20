@@ -11,4 +11,4 @@ COPY . .
 #Expose port: 5000 to local host:5000 after npm start command
 EXPOSE 5000
 #Run application
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
