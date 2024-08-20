@@ -37,9 +37,7 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-
-  hostPath:
-   path: /tmp
+  storageClassName: my-storage-class
 
 # ---
 # apiVersion: v1
