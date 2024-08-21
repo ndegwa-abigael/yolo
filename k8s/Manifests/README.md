@@ -1,5 +1,5 @@
 
-## Yolomy E-commerce Website: DevOps Class Assignment
+## Yolomy E-commerce Website: DevOps  Assignment
 
 This document outlines the instructions for cloning, testing, and deploying the Yolomy E-commerce website, built as a DevOps class assignment.
 
